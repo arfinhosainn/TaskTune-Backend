@@ -40,11 +40,11 @@ dependencies {
     // Koin for Ktor
     implementation("io.insert-koin:koin-ktor:$koinVersion")
 
-
     //mongoDB
     implementation("org.litote.kmongo:kmongo:$kmongo_version")
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
 
     implementation("commons-codec:commons-codec:$commons_codec_version")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
 
 }

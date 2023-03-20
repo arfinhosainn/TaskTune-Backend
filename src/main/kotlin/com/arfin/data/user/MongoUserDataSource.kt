@@ -14,6 +14,7 @@ class MongoUserDataSource(
     }
 
     override suspend fun insertUser(user: User): Boolean {
+        println("this is a created user $user")
         return users.insertOne(user).wasAcknowledged()
     }
 }

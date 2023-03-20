@@ -5,6 +5,7 @@ import com.arfin.routes.auth.authenticate
 import com.arfin.routes.auth.getSecretInfo
 import com.arfin.routes.auth.signIn
 import com.arfin.routes.auth.signUp
+import com.arfin.routes.todo.*
 import com.arfin.security.hashing.HashingService
 import com.arfin.security.token.TokenConfig
 import com.arfin.security.token.TokenService
@@ -23,6 +24,11 @@ fun Application.configureRouting(
         signUp(hashingService, userDataSource)
         authenticate()
         getSecretInfo()
+        getAllToDos()
+        searchToDos()
+        addToDo()
+        deleteToDo()
+        updateToDo()
 
     }
 }
