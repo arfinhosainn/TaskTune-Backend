@@ -29,6 +29,7 @@ fun Application.configureRouting(
         addToDo()
         deleteToDo()
         updateToDo()
+        getToDoById()
 
     }
 }

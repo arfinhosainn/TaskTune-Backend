@@ -9,16 +9,20 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
-fun Route.searchToDos() {
+fun Route.getToDoById() {
     authenticate {
         val repository: ToDoRepository by inject()
-        get("/todos/search") {
+        get("/todos/{id}") {
             val principal = call.principal<JWTPrincipal>()
             val userId = principal?.getClaim("userId", String::class)
             if (userId != null) {
-                val query = call.parameters["query"] ?: ""
-                val results = repository.searchToDos(userId, query)
-                call.respond(HttpStatusCode.OK, results)
+                val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+                val toDo = repository.getTodoById(id)
+                if (toDo != null && toDo.userId == userId) {
+                    call.respond(toDo)
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
             } else {
                 call.respond(HttpStatusCode.Unauthorized)
             }
