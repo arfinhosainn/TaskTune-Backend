@@ -1,5 +1,6 @@
 package com.arfin.routes.todo
 
+import com.arfin.data.entities.ApiResponse
 import com.arfin.domain.repository.ToDoRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -15,16 +16,23 @@ fun Route.getToDoById() {
         get("/todos/{id}") {
             val principal = call.principal<JWTPrincipal>()
             val userId = principal?.getClaim("userId", String::class)
+            val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
             if (userId != null) {
-                val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-                val toDo = repository.getTodoById(id)
-                if (toDo != null && toDo.userId == userId) {
-                    call.respond(toDo)
+                val response = repository.getTodoById(id)
+                if (response.success) {
+                    call.respond(
+                        HttpStatusCode.OK,
+                        message = response
+                    )
                 } else {
-                    call.respond(HttpStatusCode.NotFound)
+                    call.respond(
+                        HttpStatusCode.InternalServerError,
+                        message = ApiResponse(
+                            success = false,
+                            message = "Internal Server Error"
+                        )
+                    )
                 }
-            } else {
-                call.respond(HttpStatusCode.Unauthorized)
             }
         }
     }

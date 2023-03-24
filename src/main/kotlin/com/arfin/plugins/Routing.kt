@@ -9,9 +9,8 @@ import com.arfin.routes.todo.*
 import com.arfin.security.hashing.HashingService
 import com.arfin.security.token.TokenConfig
 import com.arfin.security.token.TokenService
-import io.ktor.server.routing.*
-import io.ktor.server.response.*
 import io.ktor.server.application.*
+import io.ktor.server.routing.*
 
 fun Application.configureRouting(
     userDataSource: UserDataSource,

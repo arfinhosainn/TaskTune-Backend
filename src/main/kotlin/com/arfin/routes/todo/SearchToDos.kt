@@ -17,8 +17,8 @@ fun Route.searchToDos() {
             val userId = principal?.getClaim("userId", String::class)
             if (userId != null) {
                 val query = call.parameters["query"] ?: ""
-                val results = repository.searchToDos(userId, query)
-                call.respond(HttpStatusCode.OK, results)
+                val results = repository.searchToDoByTitle(userId, query)
+                call.respond(HttpStatusCode.OK, message = results)
             } else {
                 call.respond(HttpStatusCode.Unauthorized)
             }

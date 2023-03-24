@@ -8,7 +8,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.application.*
 
 fun Application.configureSecurity(config: TokenConfig) {
-    
+
     authentication {
             jwt {
                 realm = this@configureSecurity.environment.config.property("jwt.realm").getString()
@@ -24,6 +24,7 @@ fun Application.configureSecurity(config: TokenConfig) {
                         JWTPrincipal(credential.payload)
                     } else null
                 }
+
             }
         }
 }
